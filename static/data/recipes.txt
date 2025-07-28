@@ -1,0 +1,6 @@
+margherita|450:tomato mozzarella garlic basil
+tuna|600:tomato mozzarella tuna onion
+pepperoni|650:tomato mozzarella pepperoni
+mushroom|500:tomato mozzarella garlic mushrooms
+four cheese|700:tomato mozzarella cheddar parmesan gorgonzola
+hawaiian|600:tomato mozzarella ham pineapple

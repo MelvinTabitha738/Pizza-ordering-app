@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+ {% block styles %}
+ <style>
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+            margin-left: 350px;
+            
+        }
+
+        .form-group {
+            margin-bottom: 2px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo h1 {
+            color: #d62d20;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .pizza-emoji {
+            font-size: 3rem;
+            animation: spin 10s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .submit_button {
+            width: 100%;
+            padding: 16px;
+            background-color: #333;
+            color: #d62d20;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+            font-weight: 900;
+        }
+
+        .submit_button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .submit_button:hover::before {
+            left: 100%;
+        }
+
+        .submit_button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        .submit_button:active {
+            transform: translateY(0);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        
+        </style>
+
+ {% endblock %}
+{% block content %}
+<div class="login-container">
+    <div class="logo">
+            <div class="pizza-emoji">🍕</div>
+            <h1>User Login</h1>
+            <p>Great To Have You Back!</p>
+        </div>
+        {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-message" style="color: green; font-weight: bold; margin-bottom: 10px;">
+      {% for msg in messages %}
+        <p>{{ msg }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+{% if message %}
+  <div class="error-message" style="color: red; font-weight: bold; margin-bottom: 10px;">
+    {{ message }}
+  </div>
+{% endif %}
+
+    
+    <form method="post" class="form-group">
+        <div class="form-group">
+           <label for="username">username</label>
+           <input type='text' name='username'>
+        </div><br>
+        <div class="form-group">
+             <label for="username">password</label>
+             <input type='password' name='password'>
+        </div><br>
+            <input class="submit_button" type=submit value=Login>
+    </form>
+    <form action="signup.html" method="GET">
+    <p>Don't have an account? <a href="signup/">Signup</a></p>
+    </form>
+    
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Menu - {{pizza}}{% endblock %}
+{% block styles %}
+<style>
+    .menu-grid {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 4rem;
+        padding: 0;
+    }
+
+    .menu-item {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+
+    .menu-item img {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+</style>
+{% endblock %}
+{% block content %}
+    This is the page to describe the {{pizza}} pizza.
+    <ul class="menu-grid">
+        {% for item in ingredients %}
+          <li class="menu-item">
+        <div class="pizza-card">
+            <img src="{{ url_for('static', filename='images/' ~ item ~ '.png') }}" alt="{{ item }}" class="pizza-image">
+            <h3>{{ item|capitalize }}</h3>
+            
+        </div>
+    </li>  
+            
+        {% endfor %}
+    </ul>
+    
+
+{% endblock %}

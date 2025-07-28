@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Homepage{% endblock %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>🍕 Welcome to Python Presto Pizza Co.! 🍕</h1>
+        <p class="hero-subtitle">Where code meets cuisine - delivering hot, fresh pizzas faster than you can compile!</p>
+        
+        {% if 'username' in session %}
+            <div class="welcome-user">
+                <h2>👋 Welcome back, {{ session['username'] }}!</h2>
+                <p>Ready to order your next delicious meal?</p>
+                <div class="user-actions">
+                    <a href="{{ url_for('show_menu') }}" class="btn btn-primary">View Menu</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="guest-actions">
+                <p class="login-prompt">Join our pizza-loving community today!</p>
+                <div class="auth-buttons">
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                    <a href="{{ url_for('signup') }}" class="btn btn-accent">Sign Up</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

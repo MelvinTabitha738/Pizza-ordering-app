@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-color: #ff6b35;
+        --secondary-color: #2c5530;
+        --accent-color: #ffd23f;
+        --dark-color: #1a1a1a;
+        --light-color: #ffffff;
+        --gray-light: #f8f9fa;
+        --gray-medium: #6c757d;
+        --success-color: #28a745;
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        --border-radius: 12px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .checkout-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .checkout-header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+        position: relative;
+    }
+
+    .checkout-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    }
+
+    .checkout-title {
+        font-family: 'Dancing Script', cursive;
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .checkout-title::before {
+        content: '🛒';
+        font-size: 2.5rem;
+    }
+
+    .checkout-content {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+    }
+
+    .checkout-form {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+    }
+
+    .form-section h3 {
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--secondary-color);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid rgba(255, 107, 53, 0.2);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: var(--transition);
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    .order-summary-checkout {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        height: fit-content;
+        position: sticky;
+        top: 2rem;
+    }
+
+    .summary-title {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .item-name {
+        font-weight: 500;
+    }
+
+    .item-qty {
+        color: var(--gray-medium);
+        font-size: 0.9rem;
+    }
+
+    .item-total {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .summary-row.final-total {
+        border-bottom: none;
+        border-top: 2px solid var(--primary-color);
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        margin-top: 1rem;
+    }
+
+    .btn {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-success {
+        background: var(--success-color);
+        color: var(--light-color);
+        width: 100%;
+        font-size: 1.1rem;
+        margin-top: 2rem;
+    }
+
+    .btn-success:hover {
+        background: #218838;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: var(--gray-medium);
+        color: var(--light-color);
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .btn-secondary:hover {
+        background: var(--secondary-color);
+        color: var(--light-color);
+    }
+
+    @media (max-width: 768px) {
+        .checkout-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .order-summary-checkout {
+            position: static;
+            order: -1;
+        }
+    }
+</style>
+
+<div class="checkout-container">
+    <!-- Header -->
+    <div class="checkout-header">
+        <h1 class="checkout-title">Secure Checkout</h1>
+        <p>Complete your order in just a few steps</p>
+    </div>
+
+    <div class="checkout-content">
+        <!-- Checkout Form -->
+        <div class="checkout-form">
+            <form method="POST" action="{{ url_for('process_order') }}">
+                <!-- Delivery Information -->
+                <div class="form-section">
+                    <h3>🏠 Delivery Information</h3>
+                    <div class="form-group">
+                        <label for="full_name">Full Name *</label>
+                        <input type="text" id="full_name" name="full_name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="+254..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <textarea id="address" name="address" class="form-control" rows="3" placeholder="Enter your full delivery address..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="special_instructions">Special Instructions</label>
+                        <textarea id="special_instructions" name="special_instructions" class="form-control" rows="2" placeholder="Any special delivery instructions..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="form-section">
+                    <h3>💳 Payment Method</h3>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="payment_method" value="mpesa" checked> 
+                            M-Pesa (Pay on Delivery)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="payment_method" value="cash"> 
+                            Cash on Delivery
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    🍕 Place Order (Ksh {{ total|round(2) }})
+                </button>
+            </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary-checkout">
+            <h3 class="summary-title">📋 Order Summary</h3>
+            
+            <!-- Order Items -->
+            {% for name, quantity in cart.items() %}
+                {% set recipe = recipes[name] %}
+                <div class="order-item">
+                    <div>
+                        <div class="item-name">{{ name.title() }}</div>
+                        <div class="item-qty">Qty: {{ quantity }}</div>
+                    </div>
+                    <div class="item-total">Ksh {{ (recipe.price * quantity)|round(2) }}</div>
+                </div>
+            {% endfor %}
+
+            <!-- Summary Totals -->
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span>Ksh {{ subtotal|round(2) }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee:</span>
+                <span>Ksh {{ delivery_fee }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax (16%):</span>
+                <span>Ksh {{ tax|round(2) }}</span>
+            </div>
+            {% if discount > 0 %}
+            <div class="summary-row">
+                <span>Discount:</span>
+                <span>- Ksh {{ discount|round(2) }}</span>
+            </div>
+            {% endif %}
+            <div class="summary-row final-total">
+                <span>Total:</span>
+                <span>Ksh {{ total|round(2) }}</span>
+            </div>
+
+            <a href="{{ url_for('view_cart') }}" class="btn btn-secondary">← Back to Cart</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

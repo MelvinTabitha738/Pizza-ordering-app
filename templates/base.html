@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Presto Pizza Co. - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    {% block styles %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div id="logo"><img src="{{ url_for('static', filename='logo.png') }}" width="150" /></div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/menu">Menu</a>
+            {% if 'username' in session %}
+                <span>Welcome, {{ session['username'] }}</span>
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/about">About</a>
+                <a href="/login">Login</a>
+                <a href="/signup">Signup</a>
+                <a href="/admin/login">Admin👤</a>
+
+            {% endif %}
+            <a href="/cart" class="cart-link">
+    🛒
+    {% if cart_count %}
+        <span class="cart-badge">{{ cart_count }}</span>
+    {% endif %}
+</a>
+
+        </nav>
+    </header>
+
+    <!-- Page-specific content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Python Presto Pizza Co. </p>
+    </footer>
+</body>
+</html>
